@@ -3,10 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
+use Validator;
 
 class Order extends Model
 {
@@ -34,16 +34,21 @@ class Order extends Model
     /**
      * @return BelongsToMany
      */
-    public function products() : BelongsToMany
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'order_products');
     }
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function users() : HasMany
+    public function users(): BelongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function validateRequest()
+    {
+
     }
 }
