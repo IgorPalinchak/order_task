@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class Order extends Model
 {
-    protected $fillable = ['title'];
+    protected $fillable = ['status'];
     public $timestamps = false;
 
     /**
@@ -21,6 +22,9 @@ class Order extends Model
         'done',
         'declined'
     ];
+
+
+
 
     /**
      * @param int $value
@@ -47,8 +51,10 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function validateRequest()
+    public function validateRequest($data)
     {
-
+        $v = Validator::make($data,
+            ['status'=>Rule::in(self::$orderStatuses)]);
+        return $v;
     }
 }

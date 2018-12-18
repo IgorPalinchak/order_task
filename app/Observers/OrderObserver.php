@@ -35,7 +35,7 @@ class OrderObserver
             ],
                 function ($message) use ($oderUserData, $order) {
                     $message->from(config('mail')['username'], 'Order Api');
-                    $message->to($oderUserData['0']->getAttribute('email'), $oderUserData['0']->getAttribute('name'))->subject('Order# ' . $order->getAttribute('id') . ' status chnged');
+                    $message->to($oderUserData['0']->getAttribute('email'), $oderUserData['0']->getAttribute('name'))->subject('Order# ' . $order->getAttribute('id') . ' status changed');
                 });
         }
 
